@@ -1,6 +1,6 @@
 import { db, getFirstPost, getHookUrls } from "./db.ts";
 
-Deno.serve({ port: 3000 }, async (req) => {
+Deno.serve(async (req) => {
   const { pathname } = new URL(req.url);
 
   switch (pathname) {

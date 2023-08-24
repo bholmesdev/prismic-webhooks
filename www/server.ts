@@ -1,4 +1,4 @@
-Deno.serve({ port: 4000 }, async (req) => {
+Deno.serve(async (req) => {
   const { pathname } = new URL(req.url);
   switch (pathname) {
     case "/":
