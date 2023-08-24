@@ -1,17 +1,19 @@
-const port = parseInt(Deno.env.get("PORT") ?? "5000");
-const hostname = Deno.env.get("PORT") ? "0.0.0.0" : "localhost";
+import { getHomepage, getHostname, getProdPort } from "../utils.ts";
 
-Deno.serve({ port, hostname }, async (req) => {
-  const { pathname } = new URL(req.url);
-  switch (pathname) {
-    case "/":
-      return await handleIndex();
-    case "/build-hook":
-      return await handleBuildHook(req);
-    default:
-      return new Response("Not found", { status: 404 });
+Deno.serve(
+  { port: getProdPort() ?? 5000, hostname: getHostname() },
+  async (req) => {
+    const { pathname } = new URL(req.url);
+    switch (pathname) {
+      case "/":
+        return await handleIndex();
+      case "/build-hook":
+        return await handleBuildHook(req);
+      default:
+        return new Response("Not found", { status: 404 });
+    }
   }
-});
+);
 
 async function handleIndex() {
   try {
@@ -45,6 +47,5 @@ async function handleBuildHook(req: Request) {
     writeContents
   );
 
-  const homepage = new URL(req.url).origin;
-  return Response.redirect(homepage, 303);
+  return Response.redirect(getHomepage(req), 303);
 }

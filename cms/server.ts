@@ -1,22 +1,23 @@
+import { getHomepage, getHostname, getProdPort } from "../utils.ts";
 import { db, getFirstPost, getHookUrls } from "./db.ts";
 
-const port = parseInt(Deno.env.get("PORT") ?? "3000");
-const hostname = Deno.env.get("PORT") ? "0.0.0.0" : "localhost";
+Deno.serve(
+  { port: getProdPort() ?? 3000, hostname: getHostname() },
+  async (req) => {
+    const { pathname } = new URL(req.url);
 
-Deno.serve({ port, hostname }, async (req) => {
-  const { pathname } = new URL(req.url);
-
-  switch (pathname) {
-    case "/":
-      return await handleIndex();
-    case "/update-post":
-      return await handleUpdatePost(req);
-    case "/add-hook":
-      return handleAddHook(req);
-    default:
-      return new Response("Not found", { status: 404 });
+    switch (pathname) {
+      case "/":
+        return await handleIndex();
+      case "/update-post":
+        return await handleUpdatePost(req);
+      case "/add-hook":
+        return handleAddHook(req);
+      default:
+        return new Response("Not found", { status: 404 });
+    }
   }
-});
+);
 
 async function handleIndex() {
   const template = await Deno.readTextFile(
@@ -67,11 +68,4 @@ async function handleAddHook(req: Request) {
 
   console.log(req.url);
   return Response.redirect(getHomepage(req), 303);
-}
-
-function getHomepage(req: Request) {
-  const prodDomain = Deno.env.get("RAILWAY_PUBLIC_DOMAIN");
-  console.log("$$$", prodDomain);
-  const origin = prodDomain ? `https://${prodDomain}` : new URL(req.url).origin;
-  return origin;
 }
