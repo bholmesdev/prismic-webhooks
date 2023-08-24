@@ -1,9 +1,9 @@
 {
   "tasks": {
-    "www:dev": "deno run --watch --allow-net --allow-read --allow-write ./www/server.ts",
-    "www:serve": "deno run --allow-net --allow-read --allow-write ./www/server.ts",
-    "cms:dev": "deno run --watch --allow-net --allow-read --allow-write ./cms/server.ts",
-    "cms:serve": "deno run --allow-net --allow-read --allow-write ./cms/server.ts",
+    "www:dev": "deno run --watch --allow-net --allow-read --allow-write=www/built.html ./www/server.ts",
+    "www:serve": "deno run --unstable --allow-net --allow-read --allow-write=www/built.html ./www/server.ts",
+    "cms:dev": "deno run --watch --allow-net --allow-read --allow-write=cms ./cms/server.ts",
+    "cms:serve": "deno run --unstable --allow-net --allow-read --allow-write=cms ./cms/server.ts",
     "cms:seed": "deno run --allow-read --allow-write ./cms/seed.ts",
     "dev": "deno task cms:dev & deno task www:dev"
   }
