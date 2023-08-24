@@ -52,8 +52,7 @@ async function handleUpdatePost(req: Request) {
     await fetch(url, { method: "POST", body: post });
   }
 
-  const homepage = new URL(req.url).origin;
-  return Response.redirect(homepage, 303);
+  return Response.redirect(getHomepage(req), 303);
 }
 
 async function handleAddHook(req: Request) {
@@ -67,6 +66,11 @@ async function handleAddHook(req: Request) {
   db.query("INSERT INTO Hooks (url) VALUES (?)", [url]);
 
   console.log(req.url);
-  const homepage = new URL(req.url).origin;
-  return Response.redirect(homepage, 303);
+  return Response.redirect(getHomepage(req), 303);
+}
+
+function getHomepage(req: Request) {
+  const origin =
+    Deno.env.get("RAILWAY_PUBLIC_DOMAIN") ?? new URL(req.url).origin;
+  return origin;
 }
