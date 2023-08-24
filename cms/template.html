@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PenPal</title>
+  <style type="text/css">
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 40px auto;
+      max-width: 50ch;
+      line-height: 1.4;
+      font-size: 18px;
+      color: #1a1a1a;
+      padding: 0 10px
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>PenPal</h1>
+
+  <form method="POST" action="/update-post">
+    <input value="%%TITLE%%" name="title" />
+    <textarea id="body" name="body">%%BODY%%</textarea>
+    <button>Update ➜</button>
+  </form>
+
+  <h2>Webhooks</h2>
+
+  <ul>
+    %%HOOKS%%
+  </ul>
+  <form method="POST" action="/add-hook">
+    <input name="url" type="url" />
+    <button>Add a build hook</button>
+  </form>
+</body>
+
+</html>
