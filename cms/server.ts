@@ -66,6 +66,7 @@ async function handleAddHook(req: Request) {
 
   db.query("INSERT INTO Hooks (url) VALUES (?)", [url]);
 
+  console.log(req.url);
   const homepage = new URL(req.url).origin;
   return Response.redirect(homepage, 303);
 }
