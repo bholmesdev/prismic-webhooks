@@ -70,7 +70,8 @@ async function handleAddHook(req: Request) {
 }
 
 function getHomepage(req: Request) {
-  const origin =
-    Deno.env.get("RAILWAY_PUBLIC_DOMAIN") ?? new URL(req.url).origin;
+  const prodDomain = Deno.env.get("RAILWAY_PUBLIC_DOMAIN");
+  console.log("$$$", prodDomain);
+  const origin = prodDomain ? `https://${prodDomain}` : new URL(req.url).origin;
   return origin;
 }
