@@ -1,6 +1,8 @@
 import { db, getFirstPost, getHookUrls } from "./db.ts";
 
-Deno.serve(async (req) => {
+const port = parseInt(Deno.env.get("PORT") ?? "3000");
+
+Deno.serve({ port }, async (req) => {
   const { pathname } = new URL(req.url);
 
   switch (pathname) {
